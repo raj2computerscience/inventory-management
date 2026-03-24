@@ -1,0 +1,6 @@
+User Name,Device Type,Device Make/Model,Serial Number,Operating System,Processor,RAM,Disk,Remarks
+Rajkumar P,Laptop,Dell/XPS 13,SN-10001,Windows 11,Intel Core i7,16GB,512GB SSD,New device
+Rajkumar P,Desktop,HP/EliteDesk,SN-10002,Windows 10,Intel Core i5,8GB,256GB SSD,Office use
+Rajkumar P,Mobile/Tablet,Apple/iPad Air,SN-10003,iPadOS A14,Apple M1,6GB,128GB,Field unit
+Rajkumar P,Network Device,Cisco/ISR4351,SN-10004,Cisco IOS,ARM,4GB,32GB,Router
+Rajkumar P,Laptop,Lenovo/ThinkPad T14,SN-10005,Ubuntu 22.04,AMD Ryzen 7,16GB,1TB SSD,Engineering

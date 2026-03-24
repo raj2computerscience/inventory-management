@@ -1,0 +1,11 @@
+User Name,Device Type,Device Make/Model,Serial Number,Operating System,Processor,RAM,Disk,Remarks
+John Doe,Laptop,Dell/XPS 13,DEL123456,Windows 11,Intel Core i7-1280P,16GB,512GB SSD,Company laptop
+Jane Smith,PC,HP/ProDesk 400,HP987654,Windows 10,Intel Core i5-10400,8GB,256GB SSD,Office desktop
+Mike Johnson,MacBook,Apple/MacBook Pro 16,MAC456789,macOS Ventura,M2 Pro,16GB,512GB SSD,Developer machine
+Sarah Williams,Laptop,Lenovo/ThinkPad X1,LEN789012,Linux Ubuntu,Intel Core i9-12900H,32GB,1TB SSD,Development laptop
+David Brown,Mobile/Tablet,Apple/iPad Pro,APP345678,iPadOS 17,M2 Chip,256GB,256GB,Company tablet
+Emily Davis,Network Device,Cisco/Catalyst,CIS901234,IOS 15.2,Cisco ASR,N/A,N/A,Network switch
+Robert Wilson,PC,Dell/OptiPlex,DEL567890,Windows Server 2022,Xeon E-2288G,64GB,2TB SSD,Server
+Lisa Anderson,Laptop,HP/Pavilion,HP234567,Windows 11,AMD Ryzen 7 5700U,16GB,512GB SSD,Sales department
+James Taylor,Mac Mini,Apple/Mac Mini,MAC678901,macOS Monterey,M1 Chip,16GB,256GB SSD,Media server
+Jessica Martinez,Mobile/Tablet,Samsung/Galaxy Tab,SAM012345,Android 13,Snapdragon 870,8GB,128GB,Project team tablet

@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: axim_inventory_db
+    environment:
+      POSTGRES_USER: ${DB_USER:-axim_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-axim_password}
+      POSTGRES_DB: ${DB_NAME:-axim_inventory}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-axim_user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - axim_network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: axim_inventory_backend
+    environment:
+      DATABASE_URL: postgresql://${DB_USER:-axim_user}:${DB_PASSWORD:-axim_password}@postgres:5432/${DB_NAME:-axim_inventory}
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: 5000
+      JWT_SECRET: ${JWT_SECRET:-your_jwt_secret_key_change_this}
+    ports:
+      - "${BACKEND_PORT:-5000}:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend/uploads:/app/uploads
+    networks:
+      - axim_network
+    restart: unless-stopped
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: axim_inventory_frontend
+    environment:
+      REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:5000/api}
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      - backend
+    networks:
+      - axim_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  axim_network:
+    driver: bridge
