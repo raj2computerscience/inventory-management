@@ -70,24 +70,6 @@ const Login = () => {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-
-        <div className="mt-6 text-center">
-          <p className="text-gray-600">
-            Don't have an account?{' '}
-            <button
-              onClick={() => navigate('/register')}
-              className="text-primary hover:underline font-medium"
-            >
-              Register here
-            </button>
-          </p>
-        </div>
-
-        <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-          <p className="text-blue-900 text-sm font-semibold mb-2">Demo Credentials:</p>
-          <p className="text-blue-800 text-sm">Email: demo@example.com</p>
-          <p className="text-blue-800 text-sm">Password: demo123</p>
-        </div>
       </div>
     </div>
   );

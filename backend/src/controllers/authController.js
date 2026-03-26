@@ -4,7 +4,7 @@ const { generateToken, hashPassword, comparePasswords, validateEmail, validatePa
 // Register
 exports.register = async (req, res, next) => {
   try {
-    const { email, username, password } = req.body;
+    const { email, username, password, secret } = req.body;
 
     if (!email || !username || !password) {
       return res.status(400).json({ error: 'Missing required fields' });
@@ -20,12 +20,15 @@ exports.register = async (req, res, next) => {
 
     const hashedPassword = await hashPassword(password);
 
+    const isAdminSignup = secret && secret === process.env.ADMIN_REGISTRATION_SECRET;
+    const role = isAdminSignup ? 'admin' : 'user';
+
     const user = await prisma.user.create({
       data: {
         email,
         username,
         password: hashedPassword,
-        role: 'user'
+        role
       }
     });
 

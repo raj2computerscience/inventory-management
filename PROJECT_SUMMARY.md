@@ -325,19 +325,19 @@ npm run dev
 cd frontend && npm start
 ```
 
-### Demo Credentials
-```
-Email: demo@example.com
-Password: demo123
-```
+### User Account Setup
+
+- **Admin Account**: Use `ADMIN_REGISTRATION_SECRET` environment variable for initial admin creation
+- **Regular Users**: Can self-register and request admin access
+- **Admin Management**: Admins can manage users via User Management panel
 
 ---
 
 ## 📊 Project Statistics
 
 - **Total Lines of Code**: 3,000+
-- **React Components**: 8
-- **Express Routes**: 13 endpoints
+- **React Components**: 9
+- **Express Routes**: 15 endpoints
 - **Database Models**: 3 (User, Inventory, ImportLog)
 - **UI Pages**: 5
 - **API Endpoints**: 13

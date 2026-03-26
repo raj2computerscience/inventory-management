@@ -7,6 +7,7 @@ dotenv.config();
 
 const inventoryRoutes = require('./routes/inventory');
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 // Routes
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

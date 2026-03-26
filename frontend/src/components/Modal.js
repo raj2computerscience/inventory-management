@@ -1,5 +1,4 @@
 import React from 'react';
-import { modal } from 'react-icons/fi';
 import { FiX } from 'react-icons/fi';
 
 const Modal = ({ isOpen, title, children, onClose, size = 'md' }) => {

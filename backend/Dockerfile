@@ -1,24 +1,33 @@
-FROM node:18-alpine
-
+# Builder stage: install dependencies and generate Prisma client
+FROM node:18-alpine AS builder
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Fix Prisma OpenSSL issue
+RUN apk add --no-cache openssl
 
-# Install dependencies
+# Install all dependencies (includes prisma binary for generate)
+COPY package*.json ./
 RUN npm ci
 
-# Copy Prisma schema
-COPY prisma ./prisma
-
-# Generate Prisma client
+# Copy application source and generate Prisma client
+COPY . .
 RUN npx prisma generate
 
-# Copy application code
-COPY src ./src
+# Prune development dependencies after build
+RUN npm prune --production
 
-# Expose port
+# Runtime stage: smaller image
+FROM node:18-alpine AS runner
+WORKDIR /app
+
+# Fix Prisma OpenSSL issue
+RUN apk add --no-cache openssl
+
+# Copy built app from builder
+COPY --from=builder /app /app
+
+ENV NODE_ENV=production
+ENV PORT=5000
+
 EXPOSE 5000
-
-# Start the application
 CMD ["npm", "start"]

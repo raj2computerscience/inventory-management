@@ -8,8 +8,8 @@ const router = express.Router();
 // Configure multer for file uploads
 const upload = multer({ dest: 'uploads/' });
 
-// All routes require authentication (optional - can be commented out)
-// router.use(authMiddleware);
+// All routes require authentication
+router.use(authMiddleware);
 
 // Get all inventory
 router.get('/', inventoryController.getInventory);

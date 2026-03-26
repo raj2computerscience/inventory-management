@@ -16,8 +16,8 @@ api.interceptors.request.use((config) => {
 });
 
 export const inventoryService = {
-  getInventory: (page = 1, limit = 10, search = '', deviceType = '') =>
-    api.get('/inventory', { params: { page, limit, search, deviceType } }),
+  getInventory: (page = 1, limit = 10, search = '', deviceType = '', deviceMake = '') =>
+    api.get('/inventory', { params: { page, limit, search, deviceType, deviceMake } }),
 
   getInventoryById: (id) =>
     api.get(`/inventory/${id}`),
@@ -46,9 +46,17 @@ export const inventoryService = {
     api.get('/inventory/export/csv', { responseType: 'blob' }),
 };
 
+export const userService = {
+  createUser: (data) => api.post('/users', data),
+  getAllUsers: () => api.get('/users'),
+  getUserById: (id) => api.get(`/users/${id}`),
+  updateUser: (id, data) => api.put(`/users/${id}`, data),
+  deleteUser: (id) => api.delete(`/users/${id}`)
+};
+
 export const authService = {
-  register: (email, username, password) =>
-    api.post('/auth/register', { email, username, password }),
+  register: (email, username, password, secret) =>
+    api.post('/auth/register', { email, username, password, secret }),
 
   login: (email, password) =>
     api.post('/auth/login', { email, password }),

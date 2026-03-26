@@ -65,11 +65,11 @@ const InventoryTable = ({ items, onEdit, onDelete, onView, loading }) => {
   }
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto shadow-sm rounded-lg border border-gray-200 bg-white">
       <table className="w-full border-collapse">
         <thead>
-          <tr className="bg-gray-100 border-b-2 border-gray-300">
-            <th className="px-4 py-3 text-left text-sm font-semibold">S.No</th>
+          <tr className="bg-slate-100 border-b-2 border-slate-200">
+            <th className="px-4 py-3 text-left text-sm font-semibold text-slate-600">S.No</th>
             <th className="px-4 py-3 text-left text-sm font-semibold">User Name</th>
             <th className="px-4 py-3 text-left text-sm font-semibold">Device Type</th>
             <th className="px-4 py-3 text-left text-sm font-semibold">Device Make/Model</th>
@@ -169,7 +169,7 @@ const InventoryTable = ({ items, onEdit, onDelete, onView, loading }) => {
         </thead>
         <tbody>
           {filteredItems.map((item, index) => (
-            <tr key={item.id} className="border-b hover:bg-gray-50">
+            <tr key={item.id} className={`border-b ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50'} hover:bg-slate-100`}>
               <td className="px-4 py-3 text-sm">{index + 1}</td>
               <td className="px-4 py-3 text-sm">{item.userName}</td>
               <td className="px-4 py-3 text-sm">

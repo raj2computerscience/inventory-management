@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci
+# Use npm install to avoid strict lockfile mismatch in Docker build.
+RUN npm install
 
 COPY . .
 
@@ -17,7 +18,8 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci --only=production
+# Install only production dependencies (no dev dependencies)
+RUN npm install --omit=dev
 
 COPY --from=builder /app/build ./build
 COPY public ./public

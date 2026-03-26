@@ -312,16 +312,16 @@ npx prisma migrate deploy
 
 ## 💻 Usage
 
-### Demo Credentials
+### User Accounts
 
-```
-Email: demo@example.com
-Password: demo123
-```
+- **Register**: Create new user account via registration page
+- **Admin**: Contact system administrator for initial admin account setup
+- **Admin Secret**: Provide admin secret during signup to create admin accounts
 
 ### 1. **Registration**
    - Navigate to `/register`
    - Fill in email, username, and password
+   - (Optional) Provide admin secret for admin account creation
    - Click Register
 
 ### 2. **Login**

@@ -21,11 +21,7 @@ docker-compose up --build
 **First Time Setup:**
 1. Wait for all services to be healthy (about 1-2 minutes)
 2. Open http://localhost:3000 in browser
-3. Use demo credentials:
-   - Email: demo@example.com
-   - Password: demo123
-
-**Or Register a new account if demo account doesn't work yet**
+3. Register a new user account or contact admin for credentials
 
 ### Option 2: Local Development (Requires PostgreSQL)
 

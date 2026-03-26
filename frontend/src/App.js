@@ -7,6 +7,8 @@ import ToastContainer from './components/Toast';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import DashboardDetails from './pages/DashboardDetails';
+import AdminUsers from './pages/AdminUsers';
 import Inventory from './pages/Inventory';
 import ImportCSV from './pages/ImportCSV';
 
@@ -37,6 +39,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Inventory />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/details"
+              element={
+                <ProtectedRoute>
+                  <DashboardDetails />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/users"
+              element={
+                <ProtectedRoute>
+                  <AdminUsers />
                 </ProtectedRoute>
               }
             />

@@ -9,7 +9,8 @@ const Register = () => {
     email: '',
     username: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    secret: ''
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -37,7 +38,8 @@ const Register = () => {
       const response = await authService.register(
         formData.email,
         formData.username,
-        formData.password
+        formData.password,
+        formData.secret
       );
       login(response.data.user, response.data.token);
       success('Registration successful');
@@ -114,6 +116,23 @@ const Register = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="••••••••"
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Admin Secret (optional)
+            </label>
+            <input
+              type="text"
+              name="secret"
+              value={formData.secret}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              placeholder="For admin account creation only"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Provide admin secret to create initial admin account.
+            </p>
           </div>
 
           <button

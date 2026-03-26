@@ -12,6 +12,8 @@ exports.getInventory = async (req, res, next) => {
     const search = req.query.search || '';
     const deviceType = req.query.deviceType || '';
 
+    const deviceMake = req.query.deviceMake || '';
+
     const where = {
       AND: [
         search ? {
@@ -22,7 +24,8 @@ exports.getInventory = async (req, res, next) => {
             { userName: { contains: search, mode: 'insensitive' } }
           ]
         } : {},
-        deviceType ? { deviceType: { equals: deviceType } } : {}
+        deviceType ? { deviceType: { equals: deviceType } } : {},
+        deviceMake ? { deviceMake: { contains: deviceMake, mode: 'insensitive' } } : {}
       ]
     };
 
@@ -79,7 +82,7 @@ exports.createInventory = async (req, res, next) => {
 
     const inventory = await prisma.inventory.create({
       data: {
-        userId: req.user?.id || 1, // Default user if not authenticated
+        userId: req.user.id,
         userName,
         deviceType,
         deviceMake,
@@ -106,6 +109,18 @@ exports.createInventory = async (req, res, next) => {
 exports.updateInventory = async (req, res, next) => {
   try {
     const { userName, deviceType, deviceMake, deviceModel, serialNumber, operatingSystem, processor, ram, disk, remarks } = req.body;
+
+    const inventoryItem = await prisma.inventory.findUnique({
+      where: { id: parseInt(req.params.id) }
+    });
+
+    if (!inventoryItem) {
+      return res.status(404).json({ error: 'Inventory item not found' });
+    }
+
+    if (req.user.role !== 'admin' && inventoryItem.userId !== req.user.id) {
+      return res.status(403).json({ error: 'You are not authorized to update this inventory item' });
+    }
 
     const inventory = await prisma.inventory.update({
       where: { id: parseInt(req.params.id) },
@@ -135,6 +150,18 @@ exports.updateInventory = async (req, res, next) => {
 // Delete inventory
 exports.deleteInventory = async (req, res, next) => {
   try {
+    const inventoryItem = await prisma.inventory.findUnique({
+      where: { id: parseInt(req.params.id) }
+    });
+
+    if (!inventoryItem) {
+      return res.status(404).json({ error: 'Inventory item not found' });
+    }
+
+    if (req.user.role !== 'admin' && inventoryItem.userId !== req.user.id) {
+      return res.status(403).json({ error: 'You are not authorized to delete this inventory item' });
+    }
+
     await prisma.inventory.delete({
       where: { id: parseInt(req.params.id) }
     });
@@ -293,6 +320,17 @@ exports.getDashboardStats = async (req, res, next) => {
       _count: true
     });
 
+    // Makewise stats for all devices (not just laptops)
+    const deviceMakeByDistribution = await prisma.inventory.groupBy({
+      by: ['deviceMake'],
+      where: {
+        deviceMake: { not: '' }
+      },
+      _count: true
+    });
+
+    const deviceMakeTotal = deviceMakeByDistribution.reduce((sum, entry) => sum + entry._count, 0);
+
     res.json({
       totalDevices,
       devicesByType: devicesByType.map(d => ({
@@ -302,7 +340,14 @@ exports.getDashboardStats = async (req, res, next) => {
       osDistribution: osByDistribution.map(o => ({
         os: o.operatingSystem,
         count: o._count
-      }))
+      })),
+      deviceMakes: deviceMakeByDistribution
+        .map((m) => ({
+          make: m.deviceMake || 'Unknown',
+          count: m._count
+        }))
+        .sort((a, b) => b.count - a.count),
+      deviceMakeTotal
     });
   } catch (error) {
     next(error);
